@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memes-v30';
+const CACHE_NAME = 'memes-v31';
 
 // Lista simplificada para garantir que o cache funcione
 const ASSETS = [
