@@ -3,84 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memes Ctrl+C Ctrl+V | Davi</title>
+    <title>Memes Davi | Oficial</title>
     <link rel="manifest" href="manifest.json">
     <style>
         :root { 
-            --bg: #0f172a; --card: #1e293b; --text: #f8fafc; 
-            --primary: #3b82f6; --accent: #f43f5e;
+            --bg: #020617; 
+            --card: #1e293b; 
+            --text: #f8fafc; 
+            --primary: #3b82f6; 
+            --accent: #ef4444;
         }
         
         body { 
-            margin: 0; font-family: sans-serif; 
-            background: var(--bg); color: var(--text); padding: 15px;
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 10px;
         }
 
-        .header { text-align: center; padding: 20px; }
-        .header h1 { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header { text-align: center; padding: 20px 0; }
+        .header h1 { 
+            margin: 0;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #3b82f6, #a855f7); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
 
-        /* Grade de Miniaturas Pequenas */
+        /* Grade de Miniaturas */
         .meme-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Imagens pequenas */
-            gap: 10px; max-width: 1000px; margin: 0 auto; 
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); 
+            gap: 8px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
         }
 
         .meme-card { 
-            background: var(--card); border-radius: 8px; overflow: hidden; 
-            cursor: pointer; transition: transform 0.2s;
-            aspect-ratio: 1 / 1; /* Deixa quadradinho */
+            background: var(--card); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            aspect-ratio: 1 / 1;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        
-        .meme-card:active { transform: scale(0.95); }
 
         .meme-card img { 
-            width: 100%; height: 100%; object-fit: cover; /* Corta para encaixar no quadrado */
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
         }
 
-        /* Modal (A imagem que aumenta) */
+        /* MODAL - A parte que você queria que aumentasse */
         .modal {
-            display: none; position: fixed; z-index: 1000;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+            display: none; 
+            position: fixed; 
+            z-index: 9999;
+            top: 0; left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0,0,0,0.95); 
+            align-items: center; 
+            justify-content: center;
             flex-direction: column;
         }
 
-        /* Ajuste para a imagem ficar GIGANTE no celular */
         .modal-content { 
-            width: auto;
-            height: auto;
-            max-width: 95vw; /* Usa 95% da largura da tela */
-            max-height: 80vh; /* Usa 80% da altura da tela */
-            border-radius: 10px;
-            object-fit: contain; /* Garante que a imagem não distorça */
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 95vw !important; /* Quase a largura total da tela */
+            max-height: 75vh !important; /* Deixa espaço para os botões */
+            object-fit: contain; 
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
         }
 
-        /* Ajuste no título para não sumir */
         #memeTitle {
-            margin-top: 15px;
-            font-size: 1.2em;
-            text-align: center;
-            width: 90%;
+            margin: 15px 0;
+            font-size: 1.2rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px #000;
         }
-        .modal-buttons { margin-top: 20px; display: flex; gap: 15px; }
+
+        .modal-buttons { 
+            display: flex; 
+            gap: 15px; 
+            margin-top: 10px;
+        }
 
         .btn {
-            padding: 12px 25px; border: none; border-radius: 25px;
-            font-weight: bold; cursor: pointer; color: white;
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 30px;
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1rem;
+            transition: 0.2s;
         }
-        .btn-share { background: var(--primary); }
-        .btn-close { background: var(--accent); }
 
-        .footer { text-align: center; margin-top: 50px; padding: 20px; opacity: 0.8; }
-        .footer img { width: 50px; border-radius: 50%; border: 2px solid var(--primary); }
+        .btn-share { background: var(--primary); color: white; }
+        .btn-close { background: var(--accent); color: white; }
+
+        .footer { text-align: center; margin-top: 40px; padding: 30px; border-top: 1px solid #1e293b; }
+        .footer img { width: 60px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; }
+        .footer p { margin: 5px 0; font-weight: bold; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Memes Ctrl+C Ctrl+V</h1>
+    <h1>Memes Davi</h1>
 </div>
 
 <div id="memeContainer" class="meme-grid">
@@ -90,18 +121,21 @@
     <img id="imgFull" class="modal-content">
     <h3 id="memeTitle"></h3>
     <div class="modal-buttons">
-        <button class="btn btn-share" onclick="shareMeme()">Enviar</button>
-        <button class="btn btn-close" onclick="closeModal()">Sair</button>
+        <button class="btn btn-share" onclick="shareMeme()">Compartilhar</button>
+        <button class="btn btn-close" onclick="closeModal()">Fechar</button>
     </div>
 </div>
+
 <div class="footer">
-    <img src="https://github.com/Davilindo77.png">
+    <img src="https://github.com/Davilindo77.png" onerror="this.src='https://via.placeholder.com/60'">
     <p>APP FEITO POR DAVI</p>
+    <small style="opacity: 0.5">Versão 2.0 - 2024</small>
 </div>
 
 <script>
     let currentMeme = { url: '', titulo: '' };
 
+    // Carrega os memes do JSON
     async function loadMemes() {
         try {
             const response = await fetch('memes.json?v=' + Date.now());
@@ -112,25 +146,33 @@
             memes.forEach(meme => {
                 const div = document.createElement('div');
                 div.className = 'meme-card';
-                div.innerHTML = `<img src="${meme.url}" alt="${meme.titulo}" onerror="this.src='https://via.placeholder.com/150'">`;
+                div.innerHTML = `<img src="${meme.url}" alt="${meme.titulo}" loading="lazy">`;
                 div.onclick = () => openModal(meme.url, meme.titulo);
                 container.appendChild(div);
             });
-        } catch (e) { console.error(e); }
+        } catch (error) {
+            console.error("Erro:", error);
+        }
     }
 
+    // Abre a imagem grande
     function openModal(url, titulo) {
         currentMeme = { url, titulo };
         document.getElementById('imgFull').src = url;
         document.getElementById('memeTitle').innerText = titulo;
         document.getElementById('memeModal').style.display = 'flex';
+        // Bloqueia o scroll do fundo
+        document.body.style.overflow = 'hidden';
     }
 
+    // Fecha a imagem grande
     function closeModal() {
         document.getElementById('memeModal').style.display = 'none';
+        // Libera o scroll
+        document.body.style.overflow = 'auto';
     }
 
-    // Função de Compartilhar
+    // Função de compartilhar
     async function shareMeme() {
         if (navigator.share) {
             try {
@@ -139,14 +181,22 @@
                     text: 'Olha esse meme no app do Davi!',
                     url: currentMeme.url
                 });
-            } catch (err) { console.log("Erro ao compartilhar"); }
+            } catch (err) { console.log("Compartilhamento cancelado"); }
         } else {
-            alert("Link copiado: " + currentMeme.url);
+            // Se o navegador não suportar, apenas copia o link
+            navigator.clipboard.writeText(currentMeme.url);
+            alert("Link da imagem copiado!");
         }
     }
 
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+    // Registra o Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+
+    // Inicia o app
     loadMemes();
 </script>
+
 </body>
 </html>
