@@ -46,8 +46,24 @@
             flex-direction: column;
         }
 
-        .modal-content { max-width: 90%; max-height: 70%; border-radius: 10px; }
+        /* Ajuste para a imagem ficar GIGANTE no celular */
+        .modal-content { 
+            width: auto;
+            height: auto;
+            max-width: 95vw; /* Usa 95% da largura da tela */
+            max-height: 80vh; /* Usa 80% da altura da tela */
+            border-radius: 10px;
+            object-fit: contain; /* Garante que a imagem não distorça */
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
 
+        /* Ajuste no título para não sumir */
+        #memeTitle {
+            margin-top: 15px;
+            font-size: 1.2em;
+            text-align: center;
+            width: 90%;
+        }
         .modal-buttons { margin-top: 20px; display: flex; gap: 15px; }
 
         .btn {
@@ -70,15 +86,14 @@
 <div id="memeContainer" class="meme-grid">
     </div>
 
-<div id="memeModal" class="modal">
+<div id="memeModal" class="modal" onclick="if(event.target == this) closeModal()">
     <img id="imgFull" class="modal-content">
-    <h3 id="memeTitle" style="margin-top: 15px;"></h3>
+    <h3 id="memeTitle"></h3>
     <div class="modal-buttons">
-        <button class="btn btn-share" onclick="shareMeme()">Compartilhar</button>
-        <button class="btn btn-close" onclick="closeModal()">Fechar</button>
+        <button class="btn btn-share" onclick="shareMeme()">Enviar</button>
+        <button class="btn btn-close" onclick="closeModal()">Sair</button>
     </div>
 </div>
-
 <div class="footer">
     <img src="https://github.com/Davilindo77.png">
     <p>APP FEITO POR DAVI</p>
