@@ -1,34 +1,49 @@
-const CACHE_NAME = 'memes-v15'; // SEMPRE mude esse número quando atualizar o app
+const CACHE_NAME = 'memes-v20'; // Subi para v20 para forçar a atualização
 const ASSETS = [
-  '/memes-ctrlc-ctrlv/',
-  '/memes-ctrlc-ctrlv/index.html',
-  '/memes-ctrlc-ctrlv/manifest.json',
-  '/memes-ctrlc-ctrlv/memes.json'
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.png',
+  './memes.json' // Adicione isso aqui também!
 ];
 
-// Instala o Service Worker e guarda os arquivos básicos
-self.addEventListener('install', e => {
-  self.skipWaiting(); // Força o SW novo a ficar ativo na hora
+// Instalação e cache de arquivos principais
+self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(c => c.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
+  self.skipWaiting();
 });
 
-// Limpa o cache antigo automaticamente quando a versão muda
-self.addEventListener('activate', e => {
+// Ativação e limpeza de caches antigos
+self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then(keys => {
+    caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       );
     })
   );
-  self.clients.claim(); // Faz o app usar o SW novo imediatamente
 });
 
-// Tenta buscar na internet primeiro; se falhar (offline), usa o cache
-self.addEventListener('fetch', e => {
+// A MÁGICA: Captura as imagens e guarda no cache enquanto você navega
+self.addEventListener('fetch', (e) => {
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    caches.match(e.request).then((response) => {
+      // Se já tem no cache (como o index.html), entrega direto
+      if (response) return response;
+
+      // Se não tem, tenta buscar na internet
+      return fetch(e.request).then((networkResponse) => {
+        // Se for uma imagem, guarda uma cópia no cache para a próxima vez
+        if (e.request.url.includes('.jpg') || e.request.url.includes('.png') || e.request.url.includes('.gif') || e.request.url.includes('googleusercontent')) {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, networkResponse.clone());
+            return networkResponse;
+          });
+        }
+        return networkResponse;
+      });
+    })
   );
 });
