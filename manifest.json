@@ -1,0 +1,15 @@
+{
+  "name": "Memes Ctrl C Ctrl V",
+  "short_name": "Memes Davi",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "https://github.com/Davilindo77.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
