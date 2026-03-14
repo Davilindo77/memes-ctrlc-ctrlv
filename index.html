@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memes Ctrl+C Ctrl+V | Davi</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root { 
+            --bg: #0f172a; 
+            --card: #1e293b; 
+            --text: #f8fafc; 
+            --primary: #3b82f6; 
+            --accent: #f43f5e;
+        }
+        
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 15px;
+        }
+
+        .header { 
+            text-align: center; 
+            padding: 30px 10px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 { 
+            margin: 0; 
+            font-size: 2.2em; 
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .meme-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        .meme-card { 
+            background: var(--card); 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meme-card img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 400px;
+            display: block; 
+            object-fit: contain;
+            background: #000;
+        }
+
+        .meme-info { padding: 15px; text-align: center; }
+        .meme-info h3 { margin: 0; font-size: 1.1em; font-weight: 500; }
+
+        .footer { 
+            text-align: center; 
+            margin-top: 50px; 
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer img { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            border: 3px solid var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .ref-text { display: block; font-weight: bold; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Memes Ctrl+C Ctrl+V</h1>
+    <p>A comunidade de memes do Davi</p>
+</div>
+
+<div id="memeContainer" class="meme-grid">
+    </div>
+
+<div class="footer">
+    <img src="https://github.com/Davilindo77.png" alt="Davi">
+    <span class="ref-text">APP FEITO POR DAVI</span>
+    <p style="opacity: 0.5; font-size: 0.8em;">Referência boa e oficial</p>
+</div>
+
+<script>
+    async function loadMemes() {
+        try {
+            const response = await fetch('memes.json');
+            const memes = await response.json();
+            const container = document.getElementById('memeContainer');
+            
+            container.innerHTML = ''; // Limpa antes de carregar
+
+            memes.forEach(meme => {
+                container.innerHTML += `
+                    <div class="meme-card">
+                        <img src="${meme.url}" alt="${meme.titulo}" onerror="this.src='https://via.placeholder.com/300?text=Meme+Indisponível'">
+                        <div class="meme-info">
+                            <h3>${meme.titulo}</h3>
+                        </div>
+                    </div>
+                `;
+            });
+        } catch (error) {
+            console.error("Erro ao carregar memes:", error);
+            document.getElementById('memeContainer').innerHTML = "<p>Erro ao carregar os memes. Verifique sua conexão.</p>";
+        }
+    }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+
+    loadMemes();
+</script>
+</body>
+</html>
