@@ -7,7 +7,7 @@
   "theme_color": "#3b82f6",
   "icons": [
     {
-      "src": "https://github.com/Davilindo77.png",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
