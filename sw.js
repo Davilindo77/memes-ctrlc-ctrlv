@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memes-v20'; // Subi para v20 para forçar a atualização
+const CACHE_NAME = 'memes-v21'; // Subi para v20 para forçar a atualização
 const ASSETS = [
   './',
   './index.html',
