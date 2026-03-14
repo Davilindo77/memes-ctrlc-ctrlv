@@ -1,10 +1,9 @@
-const CACHE_NAME = 'memes-v29';
+const CACHE_NAME = 'memes-v30';
 
-// Lista revisada e limpa (sem espaços e sem ./)
+// Lista simplificada para garantir que o cache funcione
 const ASSETS = [
   '',
   'index.html',
-  'manifest.json',
   'memes.json',
   '5021535940282886753.jpg',
   'icone.png',
@@ -15,23 +14,24 @@ const ASSETS = [
   'meme6.jpg'
 ];
 
-// Instalação: O "Tudo ou Nada" acontece aqui
+// Instalação
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Tentando salvar todos os arquivos no cache...');
+      console.log('Instalando Cache v30...');
       return cache.addAll(ASSETS);
     })
   );
 });
 
-// Ativação: Limpa caches velhos
+// Ativação e Limpeza
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
+            console.log('Removendo cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -40,7 +40,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Busca: Tenta o cache primeiro, se falhar vai na rede
+// Estratégia: Cache primeiro, depois rede
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
