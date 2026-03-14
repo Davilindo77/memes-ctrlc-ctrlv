@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memes-v27'; // Mudei para v27 para forçar a atualização
+const CACHE_NAME = 'memes-v28'; // Mudei para v27 para forçar a atualização
 
 // Lista de arquivos que o app vai salvar para funcionar offline
 const ASSETS = [
