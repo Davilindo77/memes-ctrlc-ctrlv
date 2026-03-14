@@ -1,49 +1,51 @@
-const CACHE_NAME = 'memes-v26'; // Subi para v20 para forçar a atualização
+const CACHE_NAME = 'memes-v27'; // Mudei para v27 para forçar a atualização
+
+// Lista de arquivos que o app vai salvar para funcionar offline
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icon.png',
-  './memes.json' // Adicione isso aqui também!
+  './memes.json',
+  './5021535940282886753.jpg',             // Sua foto de perfil
+  './icone.png',                           // Ícone do app
+  './5019579037218704274.jpg',             // Meme 1
+  './5019579037218704273.jpg',             // Meme 2
+  './5019579037218704275.jpg',             // Meme 3
+  './5885547093810679032.jpg',             // Meme 4
+  './Documento sem nome-1_page-0001.jpg'   // Meme novo (ID 6)
 ];
 
-// Instalação e cache de arquivos principais
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+// Instalação: Salva os arquivos no cache
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Cache aberto: salvando assets');
+      return cache.addAll(ASSETS);
+    })
   );
-  self.skipWaiting();
 });
 
-// Ativação e limpeza de caches antigos
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
+// Ativação: Limpa caches antigos
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Limpando cache antigo:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
       );
     })
   );
 });
 
-// A MÁGICA: Captura as imagens e guarda no cache enquanto você navega
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((response) => {
-      // Se já tem no cache (como o index.html), entrega direto
-      if (response) return response;
-
-      // Se não tem, tenta buscar na internet
-      return fetch(e.request).then((networkResponse) => {
-        // Se for uma imagem, guarda uma cópia no cache para a próxima vez
-        if (e.request.url.includes('.jpg') || e.request.url.includes('.png') || e.request.url.includes('.gif') || e.request.url.includes('googleusercontent')) {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(e.request, networkResponse.clone());
-            return networkResponse;
-          });
-        }
-        return networkResponse;
-      });
+// Busca: Serve os arquivos do cache se estiver offline
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
     })
   );
 });
