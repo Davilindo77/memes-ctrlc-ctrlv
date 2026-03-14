@@ -6,6 +6,54 @@
     <title>Memes Davi | Oficial</title>
     <link rel="manifest" href="manifest.json">
     <style>
+        .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.nav-btn {
+    flex: 1; /* Faz os botões terem o mesmo tamanho */
+    max-width: 180px; /* Impede que fiquem largos demais em telas grandes */
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.suggest-btn {
+    background: #2563eb; /* Azul */
+    color: white;
+}
+
+.refresh-btn {
+    background: #1e293b; /* Cinza escuro */
+    color: white;
+    border: 1px solid #334155;
+}
+
+.profile-section {
+    opacity: 0.8;
+}
+
+/* Ajuste para telas muito pequenas */
+@media (max-width: 360px) {
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+}
         :root { 
             --bg: #020617; 
             --card: #1e293b; 
