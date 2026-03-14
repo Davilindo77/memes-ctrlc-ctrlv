@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memes-v4'; // SEMPRE mude esse número quando atualizar o app
+const CACHE_NAME = 'memes-v5'; // SEMPRE mude esse número quando atualizar o app
 const ASSETS = [
   '/memes-ctrlc-ctrlv/',
   '/memes-ctrlc-ctrlv/index.html',
