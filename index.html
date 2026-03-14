@@ -103,7 +103,7 @@
 <script>
     async function loadMemes() {
         try {
-            const response = await fetch('memes.json');
+            const response = await fetch('memes.json?v=' + Date.now());
             const memes = await response.json();
             const container = document.getElementById('memeContainer');
             
