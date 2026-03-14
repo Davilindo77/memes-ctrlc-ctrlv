@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memes-v1';
+const CACHE_NAME = 'memes-v2';
 const ASSETS = [
   '/memes-ctrlc-ctrlv/',
   '/memes-ctrlc-ctrlv/index.html',
