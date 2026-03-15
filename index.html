@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Davi | Hub</title>
+    <title>Davi | Hub Oficial</title>
     <link rel="manifest" href="manifest.json">
     <style>
         :root { 
@@ -12,105 +12,103 @@
             --accent: #4f46e5;
             --text-main: #ffffff; 
             --text-sub: #64748b;
-            --tab-bg: #1e293b;
         }
 
-        /* Estilos para o Modo Claro */
         body.light-mode {
             --bg: #f8fafc;
             --card: #ffffff;
             --accent: #4f46e5;
             --text-main: #1e293b;
             --text-sub: #64748b;
-            --tab-bg: #e2e8f0;
         }
 
         html, body { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; font-family: 'Inter', sans-serif; 
+            overflow: hidden; font-family: 'Inter', -apple-system, sans-serif; 
             background: var(--bg); color: var(--text-main); 
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Menu de Navegação Superior */
+        /* Menu de Abas Superior */
         .nav-tabs {
-            display: flex;
-            background: var(--card);
-            padding: 10px;
-            gap: 5px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; background: var(--card); padding: 10px; gap: 5px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
             position: sticky; top: 0; z-index: 100;
         }
 
         .tab-link {
-            flex: 1; padding: 12px; border: none; border-radius: 10px;
+            flex: 1; padding: 12px; border: none; border-radius: 12px;
             background: transparent; color: var(--text-sub);
-            font-weight: 600; font-size: 13px; cursor: pointer;
-            transition: 0.2s;
+            font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.2s;
         }
 
-        .tab-link.active {
-            background: var(--accent);
-            color: white;
-        }
+        .tab-link.active { background: var(--accent); color: white; }
 
-        /* Containers de Conteúdo */
+        /* Seções de Conteúdo */
         .content-section {
-            display: none; /* Esconde todas por padrão */
-            height: calc(100vh - 70px);
-            overflow-y: auto;
-            padding: 20px 0;
+            display: none; height: calc(100vh - 70px);
+            overflow-y: auto; padding: 20px 0;
             animation: fadeIn 0.3s ease;
         }
-
         .content-section.active { display: block; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Estilo da Galeria */
+        /* Galeria Simétrica */
         .meme-grid { 
             display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
             gap: 12px; padding: 0 15px;
         }
         .meme-card { 
             background: var(--card); border-radius: 15px; overflow: hidden; 
-            position: relative; height: 160px; border: 1px solid rgba(0,0,0,0.1);
+            position: relative; height: 160px; border: 1px solid rgba(0,0,0,0.05);
         }
         .meme-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Estilo da Referência (GRANDE DESTAQUE) */
-        .ref-hero {
-            text-align: center; padding: 60px 20px;
+        /* Curtidas */
+        .like-btn {
+            position: absolute; bottom: 8px; right: 8px;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
+            border-radius: 50%; width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; z-index: 5; transition: 0.2s;
         }
+        .like-btn.liked { color: #ff4757; background: white; }
+
+        /* Referência (Davi em Destaque) */
+        .ref-hero { text-align: center; padding: 40px 20px; }
         .profile-border-giant {
-            display: inline-block; padding: 6px;
+            display: inline-block; padding: 5px;
             background: linear-gradient(45deg, var(--accent), #ec4899);
-            border-radius: 40px; margin-bottom: 25px;
-            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+            border-radius: 40px; margin-bottom: 20px;
         }
         .profile-img-giant {
-            width: 180px; height: 180px; border-radius: 35px;
-            object-fit: cover; border: 5px solid var(--bg);
+            width: 160px; height: 160px; border-radius: 35px;
+            object-fit: cover; border: 4px solid var(--bg);
         }
-        .ref-hero h2 { font-size: 28px; margin: 0; }
-        .ref-hero p { color: var(--text-sub); margin-top: 10px; font-size: 16px; }
 
-        /* Estilo Outros e Modo Claro */
-        .actions-list { padding: 0 20px; display: flex; flex-direction: column; gap: 15px; }
+        /* Menu de Opções (Outros) */
+        .actions-list { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
         .big-btn {
-            padding: 20px; border-radius: 20px; background: var(--card);
+            padding: 20px; border-radius: 18px; background: var(--card);
             color: var(--text-main); text-decoration: none; border: 1px solid rgba(0,0,0,0.05);
             display: flex; align-items: center; justify-content: space-between;
-            font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            font-weight: 600; font-size: 16px;
         }
 
-        /* Modal */
+        /* MODAL COM TEXTO E BOTÕES */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
-            z-index: 9999; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+            z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
         }
-        .modal-content { max-width: 90%; max-height: 70vh; border-radius: 20px; }
+        .modal-content { 
+            max-width: 90%; max-height: 50vh; border-radius: 15px; 
+            object-fit: contain;
+        }
+        #memeTitle { color: white; margin: 20px 0; font-size: 16px; text-align: center; }
+        .modal-buttons { display: flex; gap: 10px; width: 90%; max-width: 400px; }
+        .m-btn { flex: 1; padding: 18px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; }
+
     </style>
 </head>
 <body>
@@ -131,15 +129,14 @@
                 <img src="5021535940282886753.jpg" alt="Davi" class="profile-img-giant">
             </div>
             <h2>Davi Oficial</h2>
-            <p>Developer & Creator</p>
-            <div style="margin-top: 30px; opacity: 0.5; font-size: 12px; letter-spacing: 2px;">ESTOQUE DE MEMES 2026</div>
+            <p>Criador do App • 2026</p>
         </div>
     </section>
 
     <section id="outros" class="content-section">
         <div class="actions-list">
             <button class="big-btn" onclick="toggleTheme()" style="background: var(--accent); color: white; border: none;">
-                Modo Claro/Escuro <span>🌓</span>
+                Modo Claro / Escuro <span>🌓</span>
             </button>
             <a href="https://forms.gle/iCHjt7fbsiMbuN867" target="_blank" class="big-btn">
                 Sugerir Meme <span>➕</span>
@@ -148,36 +145,34 @@
                 Atualizar App <span>🔄</span>
             </button>
             <a href="https://api.whatsapp.com/send?text=Confere o novo app do Davi!" target="_blank" class="big-btn" style="color: #25D366;">
-                Compartilhar <span>💬</span>
+                Compartilhar App <span>💬</span>
             </a>
         </div>
     </section>
 
-    <div id="memeModal" class="modal" onclick="closeModal()">
+    <div id="memeModal" class="modal" onclick="if(event.target == this) closeModal()">
         <img id="imgFull" class="modal-content">
+        <h3 id="memeTitle"></h3>
+        <div class="modal-buttons">
+            <button class="m-btn" style="background: var(--accent); color: white;" onclick="shareMeme()">Enviar Link</button>
+            <button class="m-btn" style="background: #334155; color: white;" onclick="closeModal()">Voltar</button>
+        </div>
     </div>
 
 <script>
-    // Troca de Abas
     function openTab(evt, tabName) {
         let content = document.getElementsByClassName("content-section");
         for (let i = 0; i < content.length; i++) content[i].classList.remove("active");
-
         let tabs = document.getElementsByClassName("tab-link");
         for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
-
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
     }
 
-    // Modo Claro
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
-        const isLight = document.body.classList.contains('light-mode');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
-
-    // Carregar Preferência de Tema
     if(localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
 
     async function loadMemes() {
@@ -187,21 +182,51 @@
             const container = document.getElementById('memeContainer');
             container.innerHTML = '';
             memes.forEach(meme => {
+                const id = meme.id || btoa(meme.url).substring(0, 8);
+                const isLiked = localStorage.getItem(`like-${id}`) === 'true';
                 const div = document.createElement('div');
                 div.className = 'meme-card';
-                div.innerHTML = `<img src="${meme.url}" onclick="openModal('${meme.url}')">`;
+                div.innerHTML = `
+                    <img src="${meme.url}" onclick="openModal('${meme.url}', '${meme.titulo}', '${id}')">
+                    <div class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(event, '${id}')">
+                        ${isLiked ? '❤️' : '🤍'}
+                    </div>
+                `;
                 container.appendChild(div);
             });
         } catch (e) { }
     }
 
-    function openModal(url) {
+    function toggleLike(e, id) {
+        e.stopPropagation();
+        const liked = localStorage.getItem(`like-${id}`) === 'true';
+        if(liked) {
+            localStorage.removeItem(`like-${id}`);
+            e.target.innerText = '🤍';
+            e.target.classList.remove('liked');
+        } else {
+            localStorage.setItem(`like-${id}`, 'true');
+            e.target.innerText = '❤️';
+            e.target.classList.add('liked');
+            if(navigator.vibrate) navigator.vibrate(40);
+        }
+    }
+
+    function openModal(url, titulo, id) {
         document.getElementById('imgFull').src = url;
+        document.getElementById('memeTitle').innerText = titulo || "Meme";
         document.getElementById('memeModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
         document.getElementById('memeModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function shareMeme() {
+        if(navigator.share) navigator.share({title: 'Meme do Davi', url: window.location.href});
+        else { navigator.clipboard.writeText(window.location.href); alert("Link copiado!"); }
     }
 
     loadMemes();
