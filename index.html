@@ -12,241 +12,187 @@
             --accent: #4f46e5;
             --text-main: #ffffff; 
             --text-sub: #64748b;
+            --section-bg: rgba(255, 255, 255, 0.02);
         }
 
-        /* TRAVA DE TELA: Estilo App Nativo */
         html, body { 
-            margin: 0; 
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden; 
+            margin: 0; padding: 0; width: 100%; overflow-x: hidden;
             font-family: 'Inter', -apple-system, sans-serif; 
-            background: var(--bg); 
-            color: var(--text-main); 
+            background: var(--bg); color: var(--text-main); 
             -webkit-font-smoothing: antialiased;
         }
 
-        .header { 
-            padding: 40px 20px 10px; 
-            text-align: center;
-        }
-
-        .header span { 
-            font-size: 10px;
+        /* Títulos de Seção */
+        .section-title {
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--text-sub);
-            font-weight: 600;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin: 30px 20px 15px;
+            font-weight: 700;
         }
 
-        /* GRADE DE MEMES SIMÉTRICA */
+        /* SEÇÃO 1: MEMES */
         .meme-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
-            gap: 12px; 
-            padding: 15px;
-            box-sizing: border-box;
+            gap: 12px; padding: 0 15px;
         }
 
         .meme-card { 
-            background: var(--card); 
-            border-radius: 12px; 
-            overflow: hidden; 
-            position: relative;
-            height: 150px; /* Altura fixa para todos ficarem iguais */
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: transform 0.2s ease;
+            background: var(--card); border-radius: 15px; 
+            overflow: hidden; position: relative; height: 160px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .meme-card:active { transform: scale(0.96); }
+        .meme-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .meme-card img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
+        .like-btn {
+            position: absolute; bottom: 8px; right: 8px;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            border-radius: 50%; width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; z-index: 5;
+        }
+        .like-btn.liked { color: #ff4757; background: white; }
+
+        /* SEÇÃO 2: REFERÊNCIA (VOCÊ) */
+        .ref-section {
+            margin: 15px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--card) 0%, #0f172a 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+
+        .profile-border {
+            padding: 4px;
+            background: linear-gradient(45deg, var(--accent), #ec4899);
+            border-radius: 50%;
+        }
+
+        .profile-img-big {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg);
             display: block;
         }
 
-        /* BOTÃO DE CURTIR (CORAÇÃO) */
-        .like-btn {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: 0.3s;
-            z-index: 5;
+        .ref-info h2 { margin: 0; font-size: 18px; letter-spacing: 1px; }
+        .ref-info p { margin: 5px 0 0; font-size: 12px; color: var(--text-sub); }
+
+        /* SEÇÃO 3: OUTROS (BOTÕES GRANDES) */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            padding: 0 15px 40px;
         }
 
-        .like-btn.liked {
-            color: #ff4757;
-            background: white;
-            transform: scale(1.1);
-        }
-
-        /* BOTÕES DE NAVEGAÇÃO */
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 20px;
-            align-items: center;
-        }
-
-        .nav-btn {
-            width: 100%;
-            max-width: 280px;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
+        .big-btn {
+            padding: 22px;
+            border-radius: 18px;
             background: var(--card);
             color: var(--text-main);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn.primary { background: var(--accent); border: none; }
-
-        /* MODAL (ZOOM) CORRIGIDO */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 9999;
-            justify-content: center;
+            text-decoration: none;
+            display: flex;
             align-items: center;
-            flex-direction: column;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .modal-content { 
-            max-width: 90%;
-            max-height: 60vh;
-            object-fit: contain;
-            border-radius: 12px;
+        .big-btn span { font-size: 20px; }
+        .btn-primary { background: var(--accent); border: none; }
+        .btn-wa { color: #25D366; border-color: rgba(37, 211, 102, 0.2); }
+
+        /* MODAL */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+            z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
         }
-
-        #memeTitle { margin: 20px 0; font-size: 14px; color: var(--text-sub); text-align: center; padding: 0 20px; }
-
-        .modal-buttons { display: flex; gap: 10px; width: 90%; max-width: 400px; }
-
-        .btn-modal {
-            flex: 1;
-            padding: 15px;
-            border-radius: 10px;
-            border: none;
-            font-weight: bold;
-        }
-        .btn-share { background: var(--accent); color: white; }
-        .btn-close { background: #334155; color: white; }
-
-        /* RODAPÉ */
-        .footer { text-align: center; padding: 40px 20px; }
-        .profile-container {
-            display: inline-block;
-            padding: 3px;
-            background: linear-gradient(45deg, var(--accent), #ec4899);
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); display: block; }
+        .modal-content { max-width: 90%; max-height: 60vh; border-radius: 15px; }
+        .modal-buttons { display: flex; gap: 10px; width: 90%; margin-top: 20px; }
+        .m-btn { flex: 1; padding: 18px; border-radius: 12px; border: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<header class="header">
-    <span>MEMES EPTI</span>
-</header>
+    <div class="section-title">Galeria de Memes</div>
+    <div id="memeContainer" class="meme-grid"></div>
 
-<div id="memeContainer" class="meme-grid"></div>
-
-<div class="button-group">
-    <a href="https://forms.gle/iCHjt7fbsiMbuN867" target="_blank" class="nav-btn primary">Sugerir Novo Meme</a>
-    <button onclick="window.location.reload(true)" class="nav-btn">Atualizar Galeria</button>
-    <a href="https://api.whatsapp.com/send?text=Confere os memes no app do Davi!" target="_blank" class="nav-btn" style="color: #25D366; border-color: #25D366;">Compartilhar App</a>
-</div>
-
-<div id="memeModal" class="modal" onclick="if(event.target == this) closeModal()">
-    <img id="imgFull" class="modal-content">
-    <h3 id="memeTitle"></h3>
-    <div class="modal-buttons">
-        <button class="btn-modal btn-share" onclick="shareMeme()">Enviar Link</button>
-        <button class="btn-modal btn-close" onclick="closeModal()">Voltar</button>
+    <div class="section-title">Referência</div>
+    <div class="ref-section">
+        <div class="profile-border">
+            <img src="5021535940282886753.jpg" alt="Davi" class="profile-img-big">
+        </div>
+        <div class="ref-info">
+            <h2>Davi Oficial</h2>
+            <p>Criador & Desenvolvedor • 2026</p>
+        </div>
     </div>
-</div>
 
-<footer class="footer">
-    <div class="profile-container">
-        <img src="5021535940282886753.jpg" alt="Davi" class="profile-img">
+    <div class="section-title">Outros</div>
+    <div class="actions-grid">
+        <a href="https://forms.gle/iCHjt7fbsiMbuN867" target="_blank" class="big-btn btn-primary">
+            Sugerir Novo Meme <span>➕</span>
+        </a>
+        <button onclick="window.location.reload(true)" class="big-btn">
+            Atualizar Galeria <span>🔄</span>
+        </button>
+        <a href="https://api.whatsapp.com/send?text=Confere os memes no app do Davi!" target="_blank" class="big-btn btn-wa">
+            Compartilhar App <span>💬</span>
+        </a>
     </div>
-    <p style="letter-spacing: 2px; font-size: 12px; opacity: 0.8;"> • EMPRESAS DAVI 2026</p>
-</footer>
+
+    <div id="memeModal" class="modal" onclick="if(event.target == this) closeModal()">
+        <img id="imgFull" class="modal-content">
+        <h3 id="memeTitle" style="color: var(--text-sub); font-size: 14px; margin-top: 15px;"></h3>
+        <div class="modal-buttons">
+            <button class="m-btn" style="background: var(--accent); color: white;" onclick="shareMeme()">Enviar Link</button>
+            <button class="m-btn" style="background: #334155; color: white;" onclick="closeModal()">Voltar</button>
+        </div>
+    </div>
 
 <script>
-    let currentMeme = { url: '', titulo: '', id: '' };
-
     async function loadMemes() {
         try {
             const response = await fetch('memes.json');
             const memes = await response.json();
             const container = document.getElementById('memeContainer');
             container.innerHTML = '';
-
             memes.forEach(meme => {
-                // Se o seu memes.json não tiver ID, usamos a URL como ID único
-                const memeID = meme.id || btoa(meme.url).substring(0, 12);
-                const isLiked = localStorage.getItem(`like-${memeID}`) === 'true';
-
+                const id = meme.id || btoa(meme.url).substring(0, 8);
+                const isLiked = localStorage.getItem(`like-${id}`) === 'true';
                 const div = document.createElement('div');
                 div.className = 'meme-card';
                 div.innerHTML = `
-                    <img src="${meme.url}" alt="${meme.titulo}" onclick="openModal('${meme.url}', '${meme.titulo}', '${memeID}')">
-                    <div class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(event, '${memeID}')">
+                    <img src="${meme.url}" onclick="openModal('${meme.url}', '${meme.titulo}', '${id}')">
+                    <div class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(event, '${id}')">
                         ${isLiked ? '❤️' : '🤍'}
                     </div>
                 `;
                 container.appendChild(div);
             });
-        } catch (error) {
-            document.getElementById('memeContainer').innerHTML = '<p style="text-align:center">Erro ao carregar</p>';
-        }
+        } catch (e) { console.log("erro"); }
     }
 
-    function toggleLike(event, id) {
-        event.stopPropagation();
-        const btn = event.currentTarget;
-        const isLiked = localStorage.getItem(`like-${id}`) === 'true';
-
-        if (isLiked) {
-            localStorage.removeItem(`like-${id}`);
-            btn.classList.remove('liked');
-            btn.innerText = '🤍';
-        } else {
-            localStorage.setItem(`like-${id}`, 'true');
-            btn.classList.add('liked');
-            btn.innerText = '❤️';
-            if (navigator.vibrate) navigator.vibrate(40);
-        }
+    function toggleLike(e, id) {
+        e.stopPropagation();
+        const liked = localStorage.getItem(`like-${id}`) === 'true';
+        if(liked) { localStorage.removeItem(`like-${id}`); e.target.innerText = '🤍'; e.target.classList.remove('liked'); }
+        else { localStorage.setItem(`like-${id}`, 'true'); e.target.innerText = '❤️'; e.target.classList.add('liked'); if(navigator.vibrate) navigator.vibrate(40); }
     }
 
-    function openModal(url, titulo, id) {
-        currentMeme = { url, titulo, id };
+    function openModal(url, tit, id) {
         document.getElementById('imgFull').src = url;
-        document.getElementById('memeTitle').innerText = titulo;
+        document.getElementById('memeTitle').innerText = tit;
         document.getElementById('memeModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
@@ -256,23 +202,13 @@
         document.body.style.overflow = 'auto';
     }
 
-    async function shareMeme() {
-        if (navigator.share) {
-            try {
-                await navigator.share({ title: 'Meme do Davi', url: window.location.href });
-            } catch (err) {}
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            alert("Link do app copiado!");
-        }
-    }
-
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
+    function shareMeme() {
+        if(navigator.share) navigator.share({url: window.location.href});
+        else alert("Link copiado!");
     }
 
     loadMemes();
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>
-
 </body>
 </html>
