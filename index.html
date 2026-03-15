@@ -29,31 +29,49 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Menu de Abas Superior */
+        /* --- SPLASH SCREEN --- */
+        #splashScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0b0f1a; /* Fundo fixo dark para o splash */
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.6s ease;
+        }
+        #splashScreen.fade-out { opacity: 0; pointer-events: none; }
+        
+        .splash-content { text-align: center; color: white; }
+        .splash-content h1 { 
+            font-size: 2.5rem; font-weight: 800; letter-spacing: 4px; margin-bottom: 20px;
+            background: linear-gradient(90deg, #4f46e5, #ec4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .loading-bar { width: 180px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 0 auto; overflow: hidden; }
+        .loading-progress { width: 0%; height: 100%; background: var(--accent); animation: load 2s forwards ease-in-out; }
+        @keyframes load { to { width: 100%; } }
+
+        /* --- NAVEGAÇÃO --- */
         .nav-tabs {
             display: flex; background: var(--card); padding: 10px; gap: 5px;
             border-bottom: 1px solid rgba(0,0,0,0.1);
             position: sticky; top: 0; z-index: 100;
         }
-
         .tab-link {
             flex: 1; padding: 12px; border: none; border-radius: 12px;
             background: transparent; color: var(--text-sub);
             font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.2s;
         }
-
         .tab-link.active { background: var(--accent); color: white; }
 
-        /* Seções de Conteúdo */
+        /* --- SEÇÕES --- */
         .content-section {
             display: none; height: calc(100vh - 70px);
             overflow-y: auto; padding: 20px 0;
-            animation: fadeIn 0.3s ease;
+            animation: slideUp 0.4s ease;
         }
         .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Galeria Simétrica */
+        /* --- GALERIA --- */
         .meme-grid { 
             display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
             gap: 12px; padding: 0 15px;
@@ -63,18 +81,17 @@
             position: relative; height: 160px; border: 1px solid rgba(0,0,0,0.05);
         }
         .meme-card img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Curtidas */
+        
         .like-btn {
             position: absolute; bottom: 8px; right: 8px;
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
             border-radius: 50%; width: 35px; height: 35px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 18px; z-index: 5; transition: 0.2s;
+            font-size: 18px; z-index: 5;
         }
         .like-btn.liked { color: #ff4757; background: white; }
 
-        /* Referência (Davi em Destaque) */
+        /* --- EU (REFERÊNCIA) --- */
         .ref-hero { text-align: center; padding: 40px 20px; }
         .profile-border-giant {
             display: inline-block; padding: 5px;
@@ -86,7 +103,7 @@
             object-fit: cover; border: 4px solid var(--bg);
         }
 
-        /* Menu de Opções (Outros) */
+        /* --- MENU (OUTROS) --- */
         .actions-list { padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
         .big-btn {
             padding: 20px; border-radius: 18px; background: var(--card);
@@ -95,23 +112,28 @@
             font-weight: 600; font-size: 16px;
         }
 
-        /* MODAL COM TEXTO E BOTÕES */
+        /* --- MODAL --- */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.96); backdrop-filter: blur(15px);
             z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
         }
-        .modal-content { 
-            max-width: 90%; max-height: 50vh; border-radius: 15px; 
-            object-fit: contain;
-        }
-        #memeTitle { color: white; margin: 20px 0; font-size: 16px; text-align: center; }
+        .modal-content { max-width: 90%; max-height: 50vh; border-radius: 15px; object-fit: contain; }
+        #memeTitle { color: white; margin: 20px 0; font-size: 16px; text-align: center; padding: 0 20px; }
         .modal-buttons { display: flex; gap: 10px; width: 90%; max-width: 400px; }
-        .m-btn { flex: 1; padding: 18px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; }
+        .m-btn { flex: 1; padding: 18px; border-radius: 12px; border: none; font-weight: bold; }
 
     </style>
 </head>
 <body>
+
+    <div id="splashScreen">
+        <div class="splash-content">
+            <h1>MEME HUB</h1>
+            <div class="loading-bar"><div class="loading-progress"></div></div>
+            <p style="opacity: 0.5; margin-top: 15px; font-size: 12px; letter-spacing: 2px;">DAVI • 2026</p>
+        </div>
+    </div>
 
     <nav class="nav-tabs">
         <button class="tab-link active" onclick="openTab(event, 'galeria')">Galeria</button>
@@ -129,7 +151,8 @@
                 <img src="5021535940282886753.jpg" alt="Davi" class="profile-img-giant">
             </div>
             <h2>Davi Oficial</h2>
-            <p>Criador do App • 2026</p>
+            <p>Criador & Desenvolvedor</p>
+            <div style="margin-top: 40px; opacity: 0.3; font-size: 10px; letter-spacing: 4px;">VERSÃO 2.0 PREMIUM</div>
         </div>
     </section>
 
@@ -144,7 +167,7 @@
             <button onclick="window.location.reload(true)" class="big-btn">
                 Atualizar App <span>🔄</span>
             </button>
-            <a href="https://api.whatsapp.com/send?text=Confere o novo app do Davi!" target="_blank" class="big-btn" style="color: #25D366;">
+            <a href="https://api.whatsapp.com/send?text=Confere o app de memes do Davi!" target="_blank" class="big-btn" style="color: #25D366;">
                 Compartilhar App <span>💬</span>
             </a>
         </div>
@@ -160,6 +183,7 @@
     </div>
 
 <script>
+    // Controle das Abas
     function openTab(evt, tabName) {
         let content = document.getElementsByClassName("content-section");
         for (let i = 0; i < content.length; i++) content[i].classList.remove("active");
@@ -169,32 +193,45 @@
         evt.currentTarget.classList.add("active");
     }
 
+    // Controle de Tema
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
         localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
     if(localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
 
+    // Carregar Memes
     async function loadMemes() {
         try {
             const response = await fetch('memes.json');
             const memes = await response.json();
             const container = document.getElementById('memeContainer');
             container.innerHTML = '';
+            
             memes.forEach(meme => {
                 const id = meme.id || btoa(meme.url).substring(0, 8);
                 const isLiked = localStorage.getItem(`like-${id}`) === 'true';
                 const div = document.createElement('div');
                 div.className = 'meme-card';
                 div.innerHTML = `
-                    <img src="${meme.url}" onclick="openModal('${meme.url}', '${meme.titulo}', '${id}')">
+                    <img src="${meme.url}" onclick="openModal('${meme.url}', '${meme.titulo}')">
                     <div class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(event, '${id}')">
                         ${isLiked ? '❤️' : '🤍'}
                     </div>
                 `;
                 container.appendChild(div);
             });
-        } catch (e) { }
+
+            // Esconder Splash Screen após carregar
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                splash.classList.add('fade-out');
+                setTimeout(() => splash.style.display = 'none', 600);
+            }, 2200);
+
+        } catch (e) {
+            document.getElementById('splashScreen').style.display = 'none';
+        }
     }
 
     function toggleLike(e, id) {
@@ -212,7 +249,7 @@
         }
     }
 
-    function openModal(url, titulo, id) {
+    function openModal(url, titulo) {
         document.getElementById('imgFull').src = url;
         document.getElementById('memeTitle').innerText = titulo || "Meme";
         document.getElementById('memeModal').style.display = 'flex';
@@ -225,8 +262,9 @@
     }
 
     function shareMeme() {
-        if(navigator.share) navigator.share({title: 'Meme do Davi', url: window.location.href});
-        else { navigator.clipboard.writeText(window.location.href); alert("Link copiado!"); }
+        const url = window.location.href;
+        if(navigator.share) navigator.share({title: 'Meme do Davi', url: url});
+        else { navigator.clipboard.writeText(url); alert("Link copiado!"); }
     }
 
     loadMemes();
