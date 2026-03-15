@@ -2,32 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Davi | Memes Gallery</title>
     <link rel="manifest" href="manifest.json">
     <style>
         :root { 
-            --bg: #0b0f1a;           /* Fundo ultra dark */
-            --card: #161b2b;         /* Cor dos cartões */
-            --accent: #4f46e5;       /* Azul índigo moderno */
+            --bg: #0b0f1a;
+            --card: #161b2b;
+            --accent: #4f46e5;
             --text-main: #ffffff; 
-            --text-sub: #64748b;     /* Cinza elegante */
+            --text-sub: #64748b;
         }
 
-        body { 
+        /* TRAVA A TELA: Impede que o app balance para os lados */
+        html, body { 
             margin: 0; 
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* Remove o espaço vazio na lateral */
             font-family: 'Inter', -apple-system, sans-serif; 
             background: var(--bg); 
             color: var(--text-main); 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Header Minimalista */
+        /* HEADER */
         .header { 
-            padding: 50px 20px 20px; 
+            padding: 40px 20px 10px; 
             text-align: center;
         }
 
@@ -39,14 +40,14 @@
             font-weight: 600;
         }
 
-        /* Grade de Memes Profissional */
+        /* GRADE DE MEMES: Ajustada para não empurrar a tela */
         .meme-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
-            gap: 12px; 
-            max-width: 900px; 
-            margin: 0 auto; 
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
+            gap: 10px; 
+            max-width: 100%; 
             padding: 15px;
+            box-sizing: border-box; /* Garante que o padding não aumente a largura */
         }
 
         .meme-card { 
@@ -54,12 +55,8 @@
             border-radius: 12px; 
             overflow: hidden; 
             aspect-ratio: 1 / 1;
-            position: relative;
             border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: transform 0.2s ease;
         }
-
-        .meme-card:active { transform: scale(0.96); }
 
         .meme-card img { 
             width: 100%; 
@@ -68,48 +65,43 @@
             display: block;
         }
 
-        /* Botões Modernos */
+        /* BOTÕES: Maiores e centralizados para parecer App */
         .button-group {
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Botões um em cima do outro no celular fica mais profissional */
             gap: 10px;
-            margin: 25px 0;
-            padding: 0 20px;
+            padding: 20px;
+            align-items: center;
         }
 
         .nav-btn {
-            padding: 12px 24px;
-            border-radius: 10px;
+            width: 100%;
+            max-width: 280px;
+            padding: 16px; /* Botão maior para o dedo clicar fácil */
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             background: var(--card);
             color: var(--text-main);
-            transition: 0.3s;
+            text-align: center;
+            transition: 0.2s;
         }
 
-        .nav-btn.primary {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
+        .nav-btn.primary { background: var(--accent); border: none; }
 
         .whatsapp-btn {
             background: transparent !important;
             border: 1px solid rgba(37, 211, 102, 0.4) !important;
             color: #25D366 !important;
-            margin: 0 auto 40px !important;
-            display: block;
-            width: fit-content;
         }
 
-        /* Rodapé Elegante */
+        /* FOOTER */
         .footer { 
-            margin-top: auto;
             text-align: center; 
             padding: 40px 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
         }
 
         .profile-container {
@@ -121,52 +113,50 @@
         }
 
         .profile-img { 
-            width: 65px; 
-            height: 65px; 
+            width: 80px; 
+            height: 80px; 
             border-radius: 50%; 
             display: block;
             object-fit: cover;
             border: 2px solid var(--bg);
         }
 
-        .footer p { 
-            font-size: 11px; 
-            color: var(--text-sub); 
-            letter-spacing: 3px;
-            margin: 0;
-        }
-
-        /* Modal Estilo Vidro */
+        /* MODAL (ZOOM): Ajustado para não dar zoom infinito */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
         .modal-content { 
-            max-width: 90%;
-            max-height: 70%;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            max-width: 95%; /* Não deixa a imagem encostar na borda */
+            max-height: 65vh; /* Limita a altura para sobrar espaço pros botões */
+            object-fit: contain; /* Garante que a imagem inteira apareça */
+            border-radius: 10px;
         }
 
-        #memeTitle { margin: 20px 0; font-weight: 400; font-size: 14px; color: var(--text-sub); }
+        #memeTitle { margin: 15px 0; font-size: 14px; color: var(--text-sub); }
 
-        .modal-buttons { display: flex; gap: 10px; }
-        
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+        .modal-buttons { 
+            display: flex; 
+            gap: 15px; 
+            width: 90%; 
+            justify-content: center; 
+        }
+
+        .btn-modal {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
             border: none;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
         }
         .btn-share { background: var(--accent); color: white; }
         .btn-close { background: #334155; color: white; }
@@ -176,26 +166,23 @@
 <body>
 
 <header class="header">
-    <span>MEMES CCV</span>
+    <span>MEMES EPTI</span>
 </header>
 
 <div id="memeContainer" class="meme-grid"></div>
 
 <div class="button-group">
-    <a href="https://forms.gle/iCHjt7fbsiMbuN867" target="_blank" class="nav-btn primary">Sugerir</a>
-    <button onclick="window.location.reload(true)" class="nav-btn">Atualizar</button>
+    <a href="https://forms.gle/iCHjt7fbsiMbuN867" target="_blank" class="nav-btn primary">Sugerir Novo Meme</a>
+    <button onclick="window.location.reload(true)" class="nav-btn">Atualizar Galeria</button>
+    <a href="https://api.whatsapp.com/send?text=Confere os memes no app do Davi!" target="_blank" class="nav-btn whatsapp-btn">Compartilhar App</a>
 </div>
-
-<a href="https://api.whatsapp.com/send?text=Confere os memes no app do Davi!" target="_blank" class="nav-btn whatsapp-btn">
-   Compartilhar App
-</a>
 
 <div id="memeModal" class="modal" onclick="if(event.target == this) closeModal()">
     <img id="imgFull" class="modal-content">
     <h3 id="memeTitle"></h3>
     <div class="modal-buttons">
-        <button class="btn btn-share" onclick="shareMeme()">Enviar Link</button>
-        <button class="btn btn-close" onclick="closeModal()">Voltar</button>
+        <button class="btn-modal btn-share" onclick="shareMeme()">Enviar Link</button>
+        <button class="btn-modal btn-close" onclick="closeModal()">Voltar</button>
     </div>
 </div>
 
@@ -203,8 +190,7 @@
     <div class="profile-container">
         <img src="5021535940282886753.jpg" alt="Davi" class="profile-img">
     </div>
-    <p>DAVI • 2026</p>
-    <small style="opacity: 0.3; font-size: 9px;">PWA v32</small>
+    <p style="letter-spacing: 2px; font-size: 12px;">DAVI • 2026</p>
 </footer>
 
 <script>
@@ -220,12 +206,12 @@
             memes.forEach(meme => {
                 const div = document.createElement('div');
                 div.className = 'meme-card';
-                div.innerHTML = `<img src="${meme.url}" alt="${meme.titulo}" loading="lazy">`;
+                div.innerHTML = `<img src="${meme.url}" alt="${meme.titulo}">`;
                 div.onclick = () => openModal(meme.url, meme.titulo);
                 container.appendChild(div);
             });
         } catch (error) {
-            document.getElementById('memeContainer').innerHTML = '<p style="text-align:center; color: var(--text-sub);">Modo Offline Ativo</p>';
+            document.getElementById('memeContainer').innerHTML = '<p style="text-align:center; color: var(--text-sub);">Offline</p>';
         }
     }
 
@@ -246,15 +232,11 @@
         const shareUrl = window.location.origin + window.location.pathname;
         if (navigator.share) {
             try {
-                await navigator.share({
-                    title: 'Meme do Davi',
-                    text: 'Olha esse meme!',
-                    url: shareUrl
-                });
+                await navigator.share({ title: 'Meme do Davi', url: shareUrl });
             } catch (err) {}
         } else {
             navigator.clipboard.writeText(shareUrl);
-            alert("Link do app copiado!");
+            alert("Link copiado!");
         }
     }
 
