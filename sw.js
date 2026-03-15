@@ -1,6 +1,5 @@
-const CACHE_NAME = 'memes-v31';
+const CACHE_NAME = 'memes-v32'; // Atualizado para v31
 
-// Lista simplificada para garantir que o cache funcione
 const ASSETS = [
   '',
   'index.html',
@@ -18,20 +17,19 @@ const ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Instalando Cache v30...');
+      console.log('Instalando novo design v31...');
       return cache.addAll(ASSETS);
     })
   );
 });
 
-// Ativação e Limpeza
+// Ativação (Limpa o design velho)
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Removendo cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -40,7 +38,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Estratégia: Cache primeiro, depois rede
+// Estratégia de Busca
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
