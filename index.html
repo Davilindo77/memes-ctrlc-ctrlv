@@ -14,19 +14,18 @@
             --text-sub: #64748b;
         }
 
-        /* TRAVA A TELA: Impede que o app balance para os lados */
+        /* TRAVA DE TELA: Estilo App Nativo */
         html, body { 
             margin: 0; 
             padding: 0;
             width: 100%;
-            overflow-x: hidden; /* Remove o espaço vazio na lateral */
+            overflow-x: hidden; 
             font-family: 'Inter', -apple-system, sans-serif; 
             background: var(--bg); 
             color: var(--text-main); 
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER */
         .header { 
             padding: 40px 20px 10px; 
             text-align: center;
@@ -40,23 +39,26 @@
             font-weight: 600;
         }
 
-        /* GRADE DE MEMES: Ajustada para não empurrar a tela */
+        /* GRADE DE MEMES SIMÉTRICA */
         .meme-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
-            gap: 10px; 
-            max-width: 100%; 
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+            gap: 12px; 
             padding: 15px;
-            box-sizing: border-box; /* Garante que o padding não aumente a largura */
+            box-sizing: border-box;
         }
 
         .meme-card { 
             background: var(--card); 
             border-radius: 12px; 
             overflow: hidden; 
-            aspect-ratio: 1 / 1;
+            position: relative;
+            height: 150px; /* Altura fixa para todos ficarem iguais */
             border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: transform 0.2s ease;
         }
+
+        .meme-card:active { transform: scale(0.96); }
 
         .meme-card img { 
             width: 100%; 
@@ -65,10 +67,37 @@
             display: block;
         }
 
-        /* BOTÕES: Maiores e centralizados para parecer App */
+        /* BOTÃO DE CURTIR (CORAÇÃO) */
+        .like-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+            z-index: 5;
+        }
+
+        .like-btn.liked {
+            color: #ff4757;
+            background: white;
+            transform: scale(1.1);
+        }
+
+        /* BOTÕES DE NAVEGAÇÃO */
         .button-group {
             display: flex;
-            flex-direction: column; /* Botões um em cima do outro no celular fica mais profissional */
+            flex-direction: column;
             gap: 10px;
             padding: 20px;
             align-items: center;
@@ -77,9 +106,8 @@
         .nav-btn {
             width: 100%;
             max-width: 280px;
-            padding: 16px; /* Botão maior para o dedo clicar fácil */
+            padding: 16px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
@@ -87,47 +115,18 @@
             background: var(--card);
             color: var(--text-main);
             text-align: center;
-            transition: 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-btn.primary { background: var(--accent); border: none; }
 
-        .whatsapp-btn {
-            background: transparent !important;
-            border: 1px solid rgba(37, 211, 102, 0.4) !important;
-            color: #25D366 !important;
-        }
-
-        /* FOOTER */
-        .footer { 
-            text-align: center; 
-            padding: 40px 20px;
-        }
-
-        .profile-container {
-            display: inline-block;
-            padding: 3px;
-            background: linear-gradient(45deg, var(--accent), #ec4899);
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-
-        .profile-img { 
-            width: 80px; 
-            height: 80px; 
-            border-radius: 50%; 
-            display: block;
-            object-fit: cover;
-            border: 2px solid var(--bg);
-        }
-
-        /* MODAL (ZOOM): Ajustado para não dar zoom infinito */
+        /* MODAL (ZOOM) CORRIGIDO */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -135,20 +134,15 @@
         }
 
         .modal-content { 
-            max-width: 95%; /* Não deixa a imagem encostar na borda */
-            max-height: 65vh; /* Limita a altura para sobrar espaço pros botões */
-            object-fit: contain; /* Garante que a imagem inteira apareça */
-            border-radius: 10px;
+            max-width: 90%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 12px;
         }
 
-        #memeTitle { margin: 15px 0; font-size: 14px; color: var(--text-sub); }
+        #memeTitle { margin: 20px 0; font-size: 14px; color: var(--text-sub); text-align: center; padding: 0 20px; }
 
-        .modal-buttons { 
-            display: flex; 
-            gap: 15px; 
-            width: 90%; 
-            justify-content: center; 
-        }
+        .modal-buttons { display: flex; gap: 10px; width: 90%; max-width: 400px; }
 
         .btn-modal {
             flex: 1;
@@ -156,17 +150,26 @@
             border-radius: 10px;
             border: none;
             font-weight: bold;
-            font-size: 14px;
         }
         .btn-share { background: var(--accent); color: white; }
         .btn-close { background: #334155; color: white; }
 
+        /* RODAPÉ */
+        .footer { text-align: center; padding: 40px 20px; }
+        .profile-container {
+            display: inline-block;
+            padding: 3px;
+            background: linear-gradient(45deg, var(--accent), #ec4899);
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); display: block; }
     </style>
 </head>
 <body>
 
 <header class="header">
-    <span>MEMES EPTI</span>
+    <span>Coleção Particular</span>
 </header>
 
 <div id="memeContainer" class="meme-grid"></div>
@@ -174,7 +177,7 @@
 <div class="button-group">
     <a href="https://forms.gle/iCHjt7fbsiMbuN867" target="_blank" class="nav-btn primary">Sugerir Novo Meme</a>
     <button onclick="window.location.reload(true)" class="nav-btn">Atualizar Galeria</button>
-    <a href="https://api.whatsapp.com/send?text=Confere os memes no app do Davi!" target="_blank" class="nav-btn whatsapp-btn">Compartilhar App</a>
+    <a href="https://api.whatsapp.com/send?text=Confere os memes no app do Davi!" target="_blank" class="nav-btn" style="color: #25D366; border-color: #25D366;">Compartilhar App</a>
 </div>
 
 <div id="memeModal" class="modal" onclick="if(event.target == this) closeModal()">
@@ -190,11 +193,11 @@
     <div class="profile-container">
         <img src="5021535940282886753.jpg" alt="Davi" class="profile-img">
     </div>
-    <p style="letter-spacing: 2px; font-size: 12px;">DAVI • 2026</p>
+    <p style="letter-spacing: 2px; font-size: 12px; opacity: 0.8;">DAVI • 2026</p>
 </footer>
 
 <script>
-    let currentMeme = { url: '', titulo: '' };
+    let currentMeme = { url: '', titulo: '', id: '' };
 
     async function loadMemes() {
         try {
@@ -204,19 +207,44 @@
             container.innerHTML = '';
 
             memes.forEach(meme => {
+                // Se o seu memes.json não tiver ID, usamos a URL como ID único
+                const memeID = meme.id || btoa(meme.url).substring(0, 12);
+                const isLiked = localStorage.getItem(`like-${memeID}`) === 'true';
+
                 const div = document.createElement('div');
                 div.className = 'meme-card';
-                div.innerHTML = `<img src="${meme.url}" alt="${meme.titulo}">`;
-                div.onclick = () => openModal(meme.url, meme.titulo);
+                div.innerHTML = `
+                    <img src="${meme.url}" alt="${meme.titulo}" onclick="openModal('${meme.url}', '${meme.titulo}', '${memeID}')">
+                    <div class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(event, '${memeID}')">
+                        ${isLiked ? '❤️' : '🤍'}
+                    </div>
+                `;
                 container.appendChild(div);
             });
         } catch (error) {
-            document.getElementById('memeContainer').innerHTML = '<p style="text-align:center; color: var(--text-sub);">Offline</p>';
+            document.getElementById('memeContainer').innerHTML = '<p style="text-align:center">Erro ao carregar</p>';
         }
     }
 
-    function openModal(url, titulo) {
-        currentMeme = { url, titulo };
+    function toggleLike(event, id) {
+        event.stopPropagation();
+        const btn = event.currentTarget;
+        const isLiked = localStorage.getItem(`like-${id}`) === 'true';
+
+        if (isLiked) {
+            localStorage.removeItem(`like-${id}`);
+            btn.classList.remove('liked');
+            btn.innerText = '🤍';
+        } else {
+            localStorage.setItem(`like-${id}`, 'true');
+            btn.classList.add('liked');
+            btn.innerText = '❤️';
+            if (navigator.vibrate) navigator.vibrate(40);
+        }
+    }
+
+    function openModal(url, titulo, id) {
+        currentMeme = { url, titulo, id };
         document.getElementById('imgFull').src = url;
         document.getElementById('memeTitle').innerText = titulo;
         document.getElementById('memeModal').style.display = 'flex';
@@ -229,14 +257,13 @@
     }
 
     async function shareMeme() {
-        const shareUrl = window.location.origin + window.location.pathname;
         if (navigator.share) {
             try {
-                await navigator.share({ title: 'Meme do Davi', url: shareUrl });
+                await navigator.share({ title: 'Meme do Davi', url: window.location.href });
             } catch (err) {}
         } else {
-            navigator.clipboard.writeText(shareUrl);
-            alert("Link copiado!");
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link do app copiado!");
         }
     }
 
