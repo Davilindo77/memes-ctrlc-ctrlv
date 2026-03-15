@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memes-v33'; // Atualizado para v31
+const CACHE_NAME = 'memes-v34'; // Atualizado para v31
 
 const ASSETS = [
   '',
